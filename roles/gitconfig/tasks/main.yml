@@ -1,0 +1,4 @@
+---
+# tasks file for gitconfig
+- shell: git config --file {{ git_local }} user.name {{ git_user }}
+- shell: git config --file {{ git_local }} user.email {{ git_email }}

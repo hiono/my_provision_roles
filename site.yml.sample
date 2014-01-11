@@ -1,0 +1,21 @@
+---
+- hosts: all
+  user: vagrant
+  vars:
+  pre_tasks:
+    # Only run "update_cache=yes" if the last one is more than more than 3600 seconds ago. And pass options to dpkg on run
+    - name: update repo
+      sudo: yes
+      apt: upgrade=dist update_cache=yes cache_valid_time=3600 dpkg_options='force-confold,force-confdef'
+  roles:
+    - { role: ssh_keygen, ssh_passphrase: 'nankarakantaraABCxyz' }
+    - { role: dotfiles }
+    - { role: gitconfig, git_user: 'John Smith', git_email: 'jsmith@example.com' }
+  tasks:
+    # install packages
+    - name: install packages
+      sudo: yes
+      apt: pkg={{ item }}
+      with_items:
+        - ssh
+  post_tasks:

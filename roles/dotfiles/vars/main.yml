@@ -1,0 +1,4 @@
+---
+# vars file for dotfiles
+dotfiles_dir: "{{ ansible_env.HOME }}/.dotfiles"
+dotfiles_repo: 'https://github.com/hiono/dotfiles.git'

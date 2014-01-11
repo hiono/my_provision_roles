@@ -1,0 +1,4 @@
+---
+# tasks file for dotfiles
+- git: dest={{ dotfiles_dir }} repo={{ dotfiles_repo }} update='yes'
+- shell: ./relink.sh -f chdir={{ dotfiles_dir }}

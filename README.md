@@ -1,4 +1,17 @@
-my_provision_roles
-==================
+My provision roles
+========
 
-My provision roles for vagrant-ansible provisioner
+Roles:
+ - dotfiles
+ - gitconfig
+ - ssh_keygen
+
+License
+-------
+
+BSD
+
+Author Information
+------------------
+
+[Hiro Ono](https://github.com/hiono)

@@ -1,0 +1,3 @@
+---
+# vars file for gitconfig
+git_local: "{{ ansible_env.HOME }}/.gitconfig.local"
