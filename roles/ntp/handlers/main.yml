@@ -1,0 +1,8 @@
+---
+- name: restart ntp
+  sudo: yes
+  service: name=ntp state=restarted
+
+- name: force ntp update
+  sudo: yes
+  shell: "service ntp stop && ntpdate ${ntp_jst_server} && service ntp start"

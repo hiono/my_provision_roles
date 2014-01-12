@@ -1,0 +1,4 @@
+---
+- name: Install vagrant plugins
+  shell: vagrant plugin install vagrant-lxc
+  tags: vagrant-lxc

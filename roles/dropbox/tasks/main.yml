@@ -1,0 +1,17 @@
+---
+- name: install packages
+  sudo: yes
+  apt: name={{ item }} state=latest
+  with_items:
+    - w3m
+- file: path='{{ ansible_env.HOME }}/bin' state=directory mode=0755
+- name: Download Dropbox
+  get_url: |
+    url='{{ url }}'
+    dest='{{ dropbox }}'
+  register: downloaded
+  tags: dropbox
+- file: path='{{ dropbox }}' state=file mode=0755
+# - name: install daemon
+#   shell: {{ dropbox }} start -i
+#   register: link_addr

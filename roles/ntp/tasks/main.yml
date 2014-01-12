@@ -1,0 +1,56 @@
+---
+- name: install packages
+  sudo: yes
+  apt: name={{ item }} state=latest
+  with_items:
+    - ntpdate
+    - ntp
+  tags: ntp
+
+- name: cofigure {{ ntpdate_conf }}
+  sudo: yes
+  lineinfile: |
+    dest={{ ntpdate_conf }}
+    regexp='^NTPSERVERS="ntp.ubuntu.com"'
+    insertafter='^# NTPSERVERS="ntp.ubuntu.com"'
+    line="NTPSERVERS={{ ntp_server }}"
+  tags: ntp
+
+- name: cofigure {{ ntp_conf }}
+  sudo: yes
+  lineinfile: |
+    dest={{ ntp_conf }}
+    regexp='^server {{ item.org }}'
+    insertafter='^# server {{ item.org }}'
+    line='server {{ item.new }}'
+  with_items:
+    - { org: 'ntp.ubuntu.com', new: '{{ ntp_server }}' }
+  tags: ntp
+
+- name: cofigure {{ ntp_conf }}
+  sudo: yes
+  lineinfile: |
+    dest={{ ntp_conf }}
+    regexp='^server {{ item }}'
+    line='# server {{ item }}'
+  with_items:
+    - 0.ubuntu.pool.ntp.org
+    - 1.ubuntu.pool.ntp.org
+    - 2.ubuntu.pool.ntp.org
+    - 3.ubuntu.pool.ntp.org
+  tags: ntp
+
+- name: stop ntp service
+  sudo: yes
+  service: name=ntp state=stopped
+  tags: ntp
+
+- name: run ntpdate
+  sudo: yes
+  shell: ntpdate ntp.nict.jp
+  tags: ntp
+
+- name: start ntp service
+  sudo: yes
+  service: name=ntp state=started enabled=yes
+  tags: ntp
