@@ -31,7 +31,7 @@
   sudo: yes
   lineinfile: |
     dest={{ ntp_conf }}
-    regexp='^server {{ item }}'
+    regexp='^(# )?server {{ item }}'
     line='# server {{ item }}'
   with_items:
     - 0.ubuntu.pool.ntp.org
