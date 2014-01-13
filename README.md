@@ -2,9 +2,17 @@ My provision roles
 ========
 
 Roles:
+ - ansible
  - dotfiles
+ - dropbox
  - gitconfig
+ - lxc
+ - ntp
  - ssh_keygen
+ - sudoes
+ - ufw
+ - vagrant
+ - vagrant-lxc
 
 References
 ----------
