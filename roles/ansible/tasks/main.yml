@@ -11,6 +11,7 @@
     - python-yaml
     - python-jinja2
     - python-httplib2
+    - python-passlib
   tags:
     - ansible
 

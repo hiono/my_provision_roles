@@ -1,5 +1,14 @@
 ---
 # tasks file for ssh_keygen
-- name: setup ssh-keygen
-  shell: echo n|ssh-keygen -q -t rsa -N $(echo {{ ssh_passphrase }} | openssl enc -aes-128-cbc -a -d -salt -pass pass:wtf) -f {{ ansible_env.HOME }}/.ssh/id_rsa
+- name: check .ssh/id_rsa
+  shell: test -f {{ key }}
   ignore_errors: True
+  register: keygend
+  tags:
+    - ssh_keygen
+
+- name: setup ssh-keygen
+  shell: ssh-keygen -q -t rsa -N {{ ssh_passphrase }} -f {{ key }}
+  when: keygend.rc != 0
+  tags:
+    - ssh_keygen
