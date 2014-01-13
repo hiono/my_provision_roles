@@ -10,6 +10,7 @@ Roles:
  - ntp
  - ssh_keygen
  - sudoes
+ - tmux
  - ufw
  - vagrant
  - vagrant-lxc

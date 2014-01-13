@@ -1,0 +1,13 @@
+---
+- name: install packages
+  sudo: yes
+  apt: name={{ item }} state=latest
+  with_items:
+    - tmux
+  tags: tmux
+
+- name: Download tmux-completion
+  get_url: |
+    url='{{ tmux_compl_url }}'
+    dest='{{ tmux_compl }}'
+  tags: tmux
