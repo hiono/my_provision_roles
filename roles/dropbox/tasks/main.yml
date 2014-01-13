@@ -1,17 +1,29 @@
 ---
 - name: install packages
   sudo: yes
-  apt: name={{ item }} state=latest
-  with_items:
-    - w3m
-- file: path='{{ ansible_env.HOME }}/bin' state=directory mode=0755
+  apt: name=w3m state=latest
+  tags:
+    - dropbox
+
+- name: Dig bin diirectory
+  file: path='{{ ansible_env.HOME }}/bin' state=directory mode=0755
+  tags:
+    - dropbox
+
 - name: Download Dropbox
   get_url: |
     url='{{ url }}'
     dest='{{ dropbox }}'
   register: downloaded
-  tags: dropbox
-- file: path='{{ dropbox }}' state=file mode=0755
+  tags:
+    - dropbox
+
+- name: add mode
+  file: path='{{ dropbox }}' state=file mode=0755
+  when: downloaded.rc
+  tags:
+    - dropbox
+
 # - name: install daemon
 #   shell: {{ dropbox }} start -i
 #   register: link_addr
