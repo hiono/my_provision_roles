@@ -2,5 +2,5 @@
 # tasks file for sudores
 - name: setup /etc/sudoes
   sudo: yes
-  shell: sed -i echo n|ssh-keygen -q -t rsa -N $(echo {{ ssh_passphrase }} | openssl enc -aes-128-cbc -a -d -salt -pass pass:wtf) -f {{ ansible_env.HOME }}/.ssh/id_rsa
+  shell: sed -i.orig -e 's/%sudo\s\+ALL=(ALL\(:ALL\)\?)\s\+ALL/%sudo ALL=NOPASSWD:ALL/g' /etc/sudoers
   ignore_errors: True
