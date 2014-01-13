@@ -2,3 +2,7 @@
 - name: Install vagrant plugins
   shell: vagrant plugin install vagrant-lxc
   tags: vagrant-lxc
+
+- name: Fix gem
+  shell: sed -i.orig -e "/state:/ s;/$;/i;" {{ ansible_env.HOME }}/.vagrant.d/gems/gems/vagrant-lxc-*/lib/vagrant-lxc/driver/cli.rb
+  tags: vagrant-lxc
