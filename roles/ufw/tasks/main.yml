@@ -2,7 +2,8 @@
 - name: install packages
   sudo: yes
   apt: name=ufw state=latest
-  tags: ufw
+  tags:
+    - ufw
 
 - name: cofigure {{ ufw_conf }} DEFAULT_FORWARD_POLICY from DROP to ACCEPT
   sudo: yes
@@ -11,24 +12,29 @@
     regexp='^DEFAULT_FORWARD_POLICY="DROP"'
     insertafter='^# DEFAULT_FORWARD_POLICY="DROP"'
     line='DEFAULT_FORWARD_POLICY="ACCEPT"'
-  tags: ufw
+  tags:
+    - ufw
 
 - name: disable ufw
   sudo: yes
   ufw: state=disable
-  tags: ufw
+  tags:
+    - ufw
 
 - name: default DENY
   sudo: yes
   ufw: default_policy=deny
-  tags: ufw
+  tags:
+    - ufw
 
 - name: allow OpenSSH
   sudo: yes
   ufw: state=limit name=OpenSSH
-  tags: ufw
+  tags:
+    - ufw
 
 - name: enable ufw
   sudo: yes
   ufw: state=enable
-  tags: ufw
+  tags:
+    - ufw

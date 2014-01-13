@@ -3,17 +3,20 @@
   shell: dpkg -p vagrant | grep Version | sed -e 's/.*://'
   ignore_errors: True
   register: installed
-  tags: vagrant
+  tags:
+    - vagrant
 
 - name: get vagrant.deb url from vagrantup.com
   shell: wget -q -O- http://www.vagrantup.com/downloads.html | grep -o 'https://[^:]*vagrant_[0-9.]*_{{ ansible_architecture }}.deb'
   register: url
-  tags: vagrant
+  tags:
+    - vagrant
 
 - name: get vagrant.deb version
   shell: echo {{ url.stdout }} | sed -e 's/^.*vagrant_//' -e 's/_.*$//'
   register: version
-  tags: vagrant
+  tags:
+    - vagrant
 
 - name: Download Vagrant
   get_url: |
@@ -21,13 +24,15 @@
     dest='/tmp/vagrant_{{ version.stdout }}_{{ ansible_architecture }}.deb'
   when: installed.stdout < version.stdout
   register: downloaded
-  tags: vagrant
+  tags:
+    - vagrant
 
 - name: Install vagrant_vX.Y.Z.deb
   sudo: yes
   shell: sudo dpkg -i /tmp/vagrant_{{ version.stdout }}_{{ ansible_architecture }}.deb
   when: downloaded.changed
-  tags: vagrant
+  tags:
+    - vagrant
 
 - name: Install vagrant plugins
   shell: vagrant plugin install {{ item }}
@@ -35,7 +40,8 @@
     - vagrant-global-status
     - vagrant-box-updater # 『 spil-ruslan/vagrant-box-updater https://github.com/spil-ruslan/vagrant-box-updater 』
   when: downloaded.changed
-  tags: vagrant
+  tags:
+    - vagrant
 
 # bash completion for vagrant
 - name: download vagrant completion file
@@ -43,4 +49,5 @@
   get_url: |
     url='{{ completion_file }}'
     dest='{{ completion_dir }}/vagrant'
-  tags: vagrant
+  tags:
+    - vagrant

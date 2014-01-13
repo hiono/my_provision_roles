@@ -4,29 +4,34 @@
   apt: name={{ item }} state=latest
   with_items:
     - btrfs-tools
-  tags: lxc
+  tags:
+    - lxc
 
 - name: check exist btrfs
   command: bash -c "mount | grep -e 'btrfs'"
   ignore_errors: True
   register: b
-  tags: lxc
+  tags:
+    - lxc
 
 - name: check exist {{ lxc_path }}
   stat: path={{ lxc_path }}
   register: p
-  tags: lxc
+  tags:
+    - lxc
 
 - name: mount subvol {{ lxc_path }} on bftrfs
   sudo: yes
   command: btrfs subvolume create {{ lxc_path }}
   when: b.rc == 0 && p.stat.isdir is defined and p.stat.isdir == true
-  tags: lxc
+  tags:
+    - lxc
 
 - name: add apt repository
   sudo: yes
   apt_repository: repo='ppa:ubuntu-lxc/daily' state=present
-  tags: lxc
+  tags:
+    - lxc
 
 - name: install packages
   sudo: yes
@@ -37,16 +42,19 @@
     - lxc-templates
     - cgroup-lite
     - redir
-  tags: lxc
+  tags:
+    - lxc
 
 - name: allow lxc-interface for ufw
   sudo: yes
   command: ufw allow in on lxcbr0
-  tags: lxc
-  tags: ufw
+  tags:
+    - lxc
+    - ufw
 
 - name: reload ufw
   sudo: yes
   service: name=ufw state=restarted
-  tags: lxc
-  tags: ufw
+  tags:
+    - lxc
+    - ufw

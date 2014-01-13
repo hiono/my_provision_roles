@@ -11,16 +11,19 @@
     - python-yaml
     - python-jinja2
     - python-httplib2
-  tags: ansible
+  tags:
+    - ansible
 
 - name: add apt repository
   sudo: yes
   apt_repository: repo='ppa:rquillo/ansible' state=present
-  tags: ansible
+  tags:
+    - ansible
 
 - name: install ansible
   sudo: yes
   apt: name={{ item }} state=latest
   with_items:
     - ansible
-  tags: ansible
+  tags:
+    - ansible

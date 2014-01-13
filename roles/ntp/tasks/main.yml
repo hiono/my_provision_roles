@@ -5,7 +5,8 @@
   with_items:
     - ntpdate
     - ntp
-  tags: ntp
+  tags:
+    - ntp
 
 - name: cofigure {{ ntpdate_conf }}
   sudo: yes
@@ -14,7 +15,8 @@
     regexp='^NTPSERVERS="ntp.ubuntu.com"'
     insertafter='^# NTPSERVERS="ntp.ubuntu.com"'
     line="NTPSERVERS={{ ntp_server }}"
-  tags: ntp
+  tags:
+    - ntp
 
 - name: cofigure {{ ntp_conf }}
   sudo: yes
@@ -25,7 +27,8 @@
     line='server {{ item.new }}'
   with_items:
     - { org: 'ntp.ubuntu.com', new: '{{ ntp_server }}' }
-  tags: ntp
+  tags:
+    - ntp
 
 - name: cofigure {{ ntp_conf }}
   sudo: yes
@@ -38,19 +41,23 @@
     - 1.ubuntu.pool.ntp.org
     - 2.ubuntu.pool.ntp.org
     - 3.ubuntu.pool.ntp.org
-  tags: ntp
+  tags:
+    - ntp
 
 - name: stop ntp service
   sudo: yes
   service: name=ntp state=stopped
-  tags: ntp
+  tags:
+    - ntp
 
 - name: run ntpdate
   sudo: yes
   shell: ntpdate ntp.nict.jp
-  tags: ntp
+  tags:
+    - ntp
 
 - name: start ntp service
   sudo: yes
   service: name=ntp state=started enabled=yes
-  tags: ntp
+  tags:
+    - ntp
