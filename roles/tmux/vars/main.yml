@@ -1,3 +1,3 @@
 ---
-tmux_compl_url: 'https://raw.github.com/cwacek/tmux-completion/master/tmux-completion.bash
+tmux_compl_url: 'https://raw.github.com/cwacek/tmux-completion/master/tmux-completion.bash'
 tmux_compl: '/etc/bash_completion.d/tmux'
