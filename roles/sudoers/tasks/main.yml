@@ -1,6 +1,6 @@
 ---
-# tasks file for sudores
-- name: setup /etc/sudoes
+# tasks file for sudoers
+- name: setup /etc/sudoers
   sudo: yes
   shell: sed -i.orig -e 's/%sudo\s\+ALL=(ALL\(:ALL\)\?)\s\+ALL/%sudo ALL=NOPASSWD:ALL/g' /etc/sudoers
   ignore_errors: True

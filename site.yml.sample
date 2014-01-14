@@ -16,6 +16,7 @@
       apt: upgrade=dist update_cache=yes cache_valid_time=3600 dpkg_options='force-confold,force-confdef'
   roles:
     - { role: ssh_keygen }
+    - { role: sudoers }
     - { role: dotfiles }
     - { role: gitconfig, git_user: 'John Smith', git_email: 'jsmith@example.com' }
   tasks:
