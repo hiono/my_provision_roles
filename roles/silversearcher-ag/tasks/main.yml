@@ -1,0 +1,12 @@
+---
+- name: add apt repository
+  sudo: yes
+  apt_repository: repo='ppa:mizuno-as/silversearcher-ag' state=present
+  tags:
+    - ag
+
+- name: install ansible
+  sudo: yes
+  apt: name=silversearcher-ag state=latest update_cache=yes
+  tags:
+    - ag
