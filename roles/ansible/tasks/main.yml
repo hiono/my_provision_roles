@@ -23,8 +23,6 @@
 
 - name: install ansible
   sudo: yes
-  apt: name={{ item }} state=latest
-  with_items:
-    - ansible
+  apt: name=ansible state=latest update_cache=yes
   tags:
     - ansible
