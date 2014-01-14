@@ -1,0 +1,17 @@
+---
+# tasks file for ssh
+- name: Set ssh keep alive
+  sudo: yes
+  lineinfile: |
+    dest={{ conf }}
+    regexp='^#?[ ]+ProtocolKeepAlives'
+    insertafter='EOF'
+    line='    ProtocolKeepAlives 60'
+  tags:
+    - ssh
+
+- name: start ssh service
+  sudo: yes
+  service: name=ssh state=restarted
+  tags:
+    - ssh
