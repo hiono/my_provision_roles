@@ -35,7 +35,7 @@
 
 - name: install packages
   sudo: yes
-  apt: name={{ item }} state=latest
+  apt: name={{ item }} state=latest update_cache=yes
   with_items:
     - python-software-properties
     - lxc
