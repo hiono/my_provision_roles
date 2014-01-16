@@ -1,7 +1,10 @@
 ---
 - name: install packages
   sudo: yes
-  apt: name=w3m state=latest
+  apt: name={{ item }} state=latest
+  with_items:
+    - w3m
+    - python-gpgme
   tags:
     - dropbox
 
