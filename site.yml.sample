@@ -19,7 +19,10 @@
     - { role: ssh_keygen }
     - { role: sudoers }
     - { role: dotfiles }
-    - { role: gitconfig, git_user: 'John Smith', git_email: 'jsmith@example.com' }
+    - role: gitconfig
+      with_items:
+        - { name: "git.user", value: "John Smith" }
+        - { name: "git.email", value: "jsmith@example.com" }
   tasks:
     # install packages
     - name: install packages
