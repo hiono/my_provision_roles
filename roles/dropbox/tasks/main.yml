@@ -10,6 +10,7 @@
 
 - name: Dig bin diirectory
   file: path='{{ ansible_env.HOME }}/bin' state=directory mode=0755
+  ignore_errors: True
   tags:
     - dropbox
 
@@ -18,12 +19,14 @@
     url='{{ url }}'
     dest='{{ dropbox }}'
   register: downloaded
+  ignore_errors: True
   tags:
     - dropbox
 
 - name: add mode
   file: path='{{ dropbox }}' state=file mode=0755
   when: downloaded.rc
+  ignore_errors: True
   tags:
     - dropbox
 
