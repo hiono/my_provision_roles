@@ -105,15 +105,47 @@
   tags:
     - sshport
 
-- name: allow ssh
-  sudo: yes
-  ufw: state=limit name=ssh
-  tags:
-    - sshport
-
 - name: start ssh service
   sudo: yes
   service: name=ssh state=restarted
+  tags:
+    - sshport
+
+# hosts
+- name: hosts.allow
+  sudo: yes
+  lineinfile: |
+    dest={{ hosts_allow }}
+    regexp='^#?[ \t]*ALL: 127.0.0.1'
+    insertafter='EOF'
+    line='ALL: 127.0.0.1'
+  tags:
+    - sshport
+
+- name: hosts.allow
+  sudo: yes
+  lineinfile: |
+    dest={{ hosts_allow }}
+    regexp='^#?[ \t]*sshd: .jp'
+    insertafter='EOF'
+    line='sshd: .jp'
+  tags:
+    - sshport
+
+- name: hosts.deny
+  sudo: yes
+  lineinfile: |
+    dest={{ hosts_deny }}
+    regexp='^#?[ \t]*sshd: ALL'
+    insertafter='EOF'
+    line='sshd: ALL'
+  tags:
+    - sshport
+
+# ufw
+- name: allow ssh
+  sudo: yes
+  ufw: state=limit name=ssh
   tags:
     - sshport
 

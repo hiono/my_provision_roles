@@ -2,3 +2,5 @@
 service_conf:  "/etc/services"
 sshd_conf:     "/etc/ssh/sshd_config"
 sshd_port:     22
+hosts_allow:   "/etc/hosts.allow"
+hosts_deny:    "/etc/hosts.deny"
