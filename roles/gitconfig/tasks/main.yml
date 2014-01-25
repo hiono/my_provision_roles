@@ -1,5 +1,5 @@
 ---
 # tasks file for gitconfig
-- shell: git config --file "{{ git_local }}" "{{ item.name }}" "{{ item.value }}"
+- shell: git config --file "{{ git_local }}" "{{ name }}" "{{ value }}"
   tags:
     - gitconfig

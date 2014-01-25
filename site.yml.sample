@@ -15,14 +15,13 @@
       sudo: yes
       apt: upgrade=dist update_cache=yes cache_valid_time=3600 dpkg_options='force-confold,force-confdef'
   roles:
-    - ssh
     - ssh_keygen
     - sudoers
     - dotfiles
-    - role: gitconfig
-      with_items:
-        - { name: "git.user", value: "John Smith" }
-        - { name: "git.email", value: "jsmith@example.com" }
+    - { role: gitconfig, name: "git.user", value: "John Smith" }
+    - { role: gitconfig, name: "git.email", value: "jsmith@example.com" }
+    - ssh
+    - ufw
   tasks:
     # install packages
     - name: install packages
