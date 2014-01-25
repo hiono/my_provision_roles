@@ -1,30 +1,10 @@
 ---
 # tasks file for ssh
-- name: Set sshd port change
-  sudo: yes
-  lineinfile: |
-    dest={{ sshd_conf }}
-    regexp='^#?[ ]*Port 22'
-    insertafter='EOF'
-    line='Port {{ sshd_port }}'
-  tags:
-    - ssh
-
-- name: Set sshd PermitRootLogin change
-  sudo: yes
-  lineinfile: |
-    dest={{ sshd_conf }}
-    regexp='^#?[ ]*PermitRootLogin yes'
-    insertafter='EOF'
-    line='PermitRootLogin no'
-  tags:
-    - ssh
-
 - name: Set ssh keep alive
   sudo: yes
   lineinfile: |
     dest={{ ssh_conf }}
-    regexp='^#?[ ]+ProtocolKeepAlives'
+    regexp='^#?[ \t]+ProtocolKeepAlives'
     insertafter='EOF'
     line='    ProtocolKeepAlives 60'
   tags:
