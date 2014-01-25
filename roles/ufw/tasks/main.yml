@@ -27,14 +27,9 @@
   tags:
     - ufw
 
-- name: allow ssh
-  sudo: yes
-  ufw: state=limit name=ssh
-  tags:
-    - ufw
-
 - name: enable ufw
   sudo: yes
   ufw: state=enable
   tags:
     - ufw
+    - ssh

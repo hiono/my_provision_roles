@@ -1,0 +1,124 @@
+---
+# reset ufw
+- name: disable ufw
+  sudo: yes
+  ufw: state=disable
+  tags:
+    - sshport
+
+- name: delete OpenSSH setting
+  sudo: yes
+  command: ufw delete limit 22
+  tags:
+    - sshport
+
+- name: default DENY
+  sudo: yes
+  ufw: default_policy=deny
+  tags:
+    - sshport
+
+- name: enable ufw
+  sudo: yes
+  ufw: state=enable
+  tags:
+    - sshport
+
+# Setup sshd
+- name: sshd port disable
+  sudo: yes
+  lineinfile: |
+    dest={{ sshd_conf }}
+    regexp='^#?[ \t]*Port 22'
+    insertafter='EOF'
+    line='# Port 22'
+  tags:
+    - sshport
+
+- name: Set sshd port change
+  sudo: yes
+  lineinfile: |
+    dest={{ sshd_conf }}
+    regexp='^#?[ \t]*Port 22'
+    insertafter='EOF'
+    line='Port {{ sshd_port }}'
+  tags:
+    - sshport
+
+- name: sshd PermitRootLogin disable
+  sudo: yes
+  lineinfile: |
+    dest={{ sshd_conf }}
+    regexp='^#?[ \t]*PermitRootLogin yes'
+    insertafter='EOF'
+    line='# PermitRootLogin yes'
+  tags:
+    - sshport
+
+- name: Set sshd PermitRootLogin change
+  sudo: yes
+  lineinfile: |
+    dest={{ sshd_conf }}
+    regexp='^#?[ \t]*PermitRootLogin yes'
+    insertafter='EOF'
+    line='PermitRootLogin no'
+  tags:
+    - sshport
+
+- name: Set service 22/tcp port disable
+  sudo: yes
+  lineinfile: |
+    dest={{ service_conf }}
+    regexp='^#?[ \t]*ssh[ \t]+22/tcp'
+    insertafter='EOF'
+    line='# ssh             22/tcp    			# SSH Remote Login Protocol'
+  tags:
+    - sshport
+
+- name: Set service tcp new port ({{ sshd_port }}) enable
+  sudo: yes
+  lineinfile: |
+    dest={{ service_conf }}
+    regexp='^#?[ \t]*ssh[ \t]+{{ sshd_port }}/tcp'
+    insertafter='EOF'
+    line='ssh		{{ sshd_port }}/tcp    			# SSH Remote Login Protocol'
+  tags:
+    - sshport
+
+- name: Set service 22/udp port disable
+  sudo: yes
+  lineinfile: |
+    dest={{ service_conf }}
+    regexp='^#?[ \t]*ssh[ \t]+22/udp'
+    insertafter='EOF'
+    line='# ssh             22/ubp'
+  tags:
+    - sshport
+
+- name: Set service udp new port ({{ sshd_port }}) enable
+  sudo: yes
+  lineinfile: |
+    dest={{ service_conf }}
+    regexp='^#?[ \t]*ssh[ \t]+{{ sshd_port }}/udp'
+    insertafter='EOF'
+    line='ssh		{{ sshd_port }}/udp'
+  tags:
+    - sshport
+
+- name: allow ssh
+  sudo: yes
+  ufw: state=limit name=ssh
+  tags:
+    - sshport
+
+- name: start ssh service
+  sudo: yes
+  service: name=ssh state=restarted
+  tags:
+    - sshport
+
+- name: reload ufw
+  sudo: yes
+  service: name=ufw state=restarted
+  tags:
+    - sshport

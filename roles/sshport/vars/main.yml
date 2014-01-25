@@ -1,0 +1,4 @@
+---
+service_conf:  "/etc/services"
+sshd_conf:     "/etc/ssh/sshd_config"
+sshd_port:     22
