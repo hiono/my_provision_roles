@@ -1,2 +1,4 @@
 ---
-conf: "/etc/ssh/ssh_config"
+ssh_conf: "/etc/ssh/ssh_config"
+sshd_conf: "/etc/ssh/ssh_config"
+sshd_port: 22
