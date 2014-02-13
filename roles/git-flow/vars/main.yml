@@ -1,0 +1,3 @@
+---
+url: 'https://raw.github.com/nvie/gitflow/develop/contrib/gitflow-installer.sh'
+installer: '/tmp/gitflow-installer.sh'

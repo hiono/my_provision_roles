@@ -1,0 +1,25 @@
+---
+- name: install packages
+  sudo: yes
+  apt: name={{ item }} state=latest
+  with_items:
+    - git
+  tags:
+    - gitflow
+
+- name: Download git-flow
+  get_url: |
+    url='{{ url }}'
+    dest='{{ installer }}'
+  register: downloaded
+  ignore_errors: True
+  tags:
+    - gitflow
+
+- name: install git-flow
+  sudo: yes
+  shell: bash '{{ installer }}'
+  when: downloaded.rc
+  ignore_errors: True
+  tags:
+    - gitflow
