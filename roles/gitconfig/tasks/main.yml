@@ -1,5 +1,6 @@
 ---
 # tasks file for gitconfig
-- shell: git config --file "{{ git_local }}" {{ option }} {{ name }} "{{ value }}"
+- shell: git config --file {{ git_local }} {{ option }} {{ name }} {{ value }}
+  ignore_errors: True
   tags:
     - gitconfig
