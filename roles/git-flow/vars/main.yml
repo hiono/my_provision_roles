@@ -1,3 +1,5 @@
 ---
-url: 'https://raw.github.com/nvie/gitflow/develop/contrib/gitflow-installer.sh'
-installer: '/tmp/gitflow-installer.sh'
+# url: 'https://raw.github.com/nvie/gitflow/develop/contrib/gitflow-installer.sh'
+url: 'https://raw.github.com/petervanderdoes/gitflow/develop/contrib/gitflow-installer.sh'
+installer: 'gitflow-installer.sh'
+installdir: '/usr/local/src/git-flow'

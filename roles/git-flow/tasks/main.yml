@@ -1,5 +1,5 @@
 ---
-- name: install packages
+- name: pre-install packages
   sudo: yes
   apt: name={{ item }} state=latest
   with_items:
@@ -7,19 +7,27 @@
   tags:
     - gitflow
 
+- name: Dig gitflow diirectory
+  sudo: yes
+  file: path='{{ installdir }}' state=directory mode=0755
+  tags:
+    - gitflow
+
 - name: Download git-flow
+  sudo: yes
   get_url: |
     url='{{ url }}'
-    dest='{{ installer }}'
-  register: downloaded
+    dest='{{ installdir }}/{{ installer }}'
+    force='no'
   ignore_errors: True
+  # register: downloaded
   tags:
     - gitflow
 
 - name: install git-flow
   sudo: yes
-  shell: bash '{{ installer }}'
-  when: downloaded.rc
+  shell: bash '{{ installdir }}/{{ installer }}' install develop
+  # when: downloaded.rc
   ignore_errors: True
   tags:
     - gitflow
