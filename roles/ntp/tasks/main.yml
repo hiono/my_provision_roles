@@ -52,7 +52,7 @@
 
 - name: run ntpdate
   sudo: yes
-  shell: ntpdate ntp.nict.jp
+  shell: ntpdate {{ ntp_server }}
   tags:
     - ntp
 
